@@ -15,11 +15,13 @@ new Vue({
 
 	data:{
 		prueba:'HOLA MUNDO',
+		
 		sku:'',
 		producto:[],
 		ventas:[],		
 		cantidades:[1,1,1,1,1,1,1,1,1],
 		auxSubTotal:0,
+		pagara_con:0,
 	},
 
 	// // AL CREARSE LA PAGINA
@@ -30,22 +32,45 @@ new Vue({
 
 	methods:{
 		buscarProducto:function(){
+			var encontrado=0;
 			// console.log('HOLA');
 			var producto={};
+			//inicio  de busqueda
+     for (var i = 0; i < this.ventas.length; i++) {
+     if (this.sku==this.ventas[i].sku){
+     	encontrado=1; 
+     	this.ventas[i].cantidad++;
+     	this.cantidades[i]++;
+     }
+     }
+     //fin de busqueda
+
+
+			//inicio get de  ajax
+			if(encontrado==0)
 			this.$http.get(apiProd + '/' + this.sku).then(function(j){
 				this.producto=j.data;
 
 				producto={sku: j.data.sku,
 						 nombre:j.data.nombre,
-						 precio:j.data.precio_venta,
+						 precio:j.data.precio,
+						 foto:'prods/'+ j.data.foto,
 						cantidad:1,
-					    total:j.data.precio_venta};
+					    total:j.data.precio_venta
+
+					  };
+					    
+					  
 
 				if (this.producto)
 					this.ventas.push(producto);
 				this.sku="";
 			})
-		},
+		},//fin de buscar producto
+		
+		mostrarcobro:function(){
+     $('#modalCobro').modal('show')
+		},//fin de mostrar cobro
 
 		eliminarProducto:function(id){
 			this.ventas.splice(id,1);
@@ -108,6 +133,13 @@ new Vue({
 				acum=acum+this.ventas[i].cantidad;
 			}
 			return acum;
+		},
+		cambio(){
+			var camb=0;
+			camb=this.pagara_con-this.granTotal;
+			camb=camb.toFixed(1);
+			return camb
+
 		}
 		
 		

@@ -32,6 +32,9 @@ Route::apiResource('apiProducto','ProductoController');
 
 Route::view('mascotas','mascotas');
 Route::view('ventas','ventas');
+Route::view('practica','practicaVue');
+Route::view('simple','simple');
+Route::view('crud','crudproductos');
 
 
 Route::get('pdf','ReporteController@pdf');
