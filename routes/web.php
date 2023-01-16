@@ -29,12 +29,15 @@ Route::apiResource('apiMascota','MascotaController');
 Route::apiResource('apiEspecie','EspecieController');
 Route::apiResource('apiPropietario','PropietarioController');
 Route::apiResource('apiProducto','ProductoController');
+Route::apiResource('pasteleria','Pcontroller');
+
 
 Route::view('mascotas','mascotas');
 Route::view('ventas','ventas');
 Route::view('practica','practicaVue');
 Route::view('simple','simple');
 Route::view('crud','crudproductos');
+Route::view('past','pasteleria');
 
 
 Route::get('pdf','ReporteController@pdf');
